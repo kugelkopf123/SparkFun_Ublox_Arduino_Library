@@ -39,6 +39,21 @@
 
 #include "SparkFun_Ublox_Arduino_Library.h"
 
+
+// To work with 3rd Party Modul of uBlox neo 7m uncomment it:
+//#define Neo7
+
+
+#ifdef Neo7
+#define msglength 84
+#else 
+#define msglength 92
+#endif
+//////////////////////////////////////////
+
+
+
+
 SFE_UBLOX_GPS::SFE_UBLOX_GPS(void)
 {
   // Constructor
@@ -509,7 +524,7 @@ void SFE_UBLOX_GPS::processUBXpacket(ubxPacket *msg)
     break;
 
   case UBX_CLASS_NAV:
-    if (msg->id == UBX_NAV_PVT && msg->len == 92)
+    if (msg->id == UBX_NAV_PVT && msg->len == msglength ) //92
     {
       //Parse various byte fields into global vars
       constexpr int startingSpot = 0; //fixed value used in processUBX
